@@ -40,6 +40,10 @@ To use a backend, you need to install the drivers using the commands below and t
 
 <img src="http://i.imgur.com/f843YXK.png" height="200">
 
+#### Using the jquery-cron plug ,easy to scheduler the task.
+
+<img src="imgs/jquery_select.png" height="400">
+
 #### Manage multiple jobs scheduled with Cron syntax. Run times are shown in your local timezone.
 
 <img src="http://i.imgur.com/PjPQedn.png" height="400">
@@ -66,6 +70,7 @@ To use a backend, you need to install the drivers using the commands below and t
  * [Utkarsh Sengar](https://twitter.com/utsengar)
  * Stephanie Wei
  * [Ryan Clough](https://github.com/rclough)
+ * [Bruce done](https://github.com/brucedone)
 
 #### Get Started Contributing
 
