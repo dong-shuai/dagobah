@@ -1,3 +1,8 @@
+### v0.3.3(September 9,2016)
+
+  * use the jquery-cron the be friendly 
+  * fix use the network static source ,use the local source
+
 ### v0.3.2
 
   * Added Dagobahd.debug key to config to enable Flask's debugging
@@ -47,3 +52,4 @@
 
  * Fixed broken install due to incorrect reference to standard log file
  * Added missing requirements for install and for running tests
+

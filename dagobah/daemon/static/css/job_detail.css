@@ -3,70 +3,70 @@
 }
 
 .page-header h3 {
-	display: inline-block;
+    display: inline-block;
 }
 
 .section-header {
-	display: inline-block;
+    display: inline-block;
 }
 
 .right {
-	text-align: right;
+    text-align: right;
 }
 
 .btn-sequence {
-	margin-right: 10px;
+    margin-right: 10px;
 }
 
 .btn-sequence-right {
-	margin-left: 10px;
+    margin-left: 10px;
 }
 
 .page-header .right {
-	float: right;
+    float: right;
 }
 
 .page-header .status-waiting {
-	color: grey;
+    color: grey;
 }
 
 .page-header .status-running {
-	color: green;
+    color: green;
 }
 
 .page-header .status-failed {
-	color: red;
+    color: red;
 }
 
 .task-failed {
-	color: red;
+    color: red;
 }
 
 textarea {
-	width: 100%;
+    width: 100%;
 }
 
 #schedule label {
-	margin-top: -11px;
+    margin-top: -11px;
 }
 
 #table-toggle {
-	float: right;
-	margin-top: 18px;
+    float: right;
+    margin-top: 18px;
 }
 
 td:last-child {
-	width: 17%;
+    width: 17%;
 }
 
 td > i {
-	opacity: 0;
-	cursor: pointer;
-	margin-left: 10px;
+    opacity: 0;
+    cursor: pointer;
+    margin-left: 10px;
 }
 
 td:hover > i {
-	opacity: 1;
+    opacity: 1;
 }
 
 i.icon-info-sign {
@@ -84,4 +84,18 @@ div.relative-holder {
     border: 1px solid #EEEEEE;
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.cron {
+    margin: 10px;
+    border: 1px dashed #ccc;
+    padding: 10px;
+    font-family: Helvetica, Arial, sans-serif;
+    color: #222;
+    background-color: #ddd;
+    line-height: 24px;
+}
+
+.cron select{
+    width: 100px;
 }

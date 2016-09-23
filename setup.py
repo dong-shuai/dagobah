@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='dagobah',
-      version='0.3.2',
+      version='0.3.3',
       description='Simple DAG-based job scheduler',
       url='http://github.com/tthieman/dagobah',
       author='Travis Thieman',
@@ -17,6 +17,7 @@ setup(name='dagobah',
                                 'daemon/static/js/*',
                                 'daemon/static/img/*',
                                 'daemon/static/lib/*.js',
+                                'daemon/static/lib/*',
                                 'daemon/static/lib/Kickstrap1.3.2/Kickstrap/apps/bootstrap/*.js',
                                 'daemon/static/lib/Kickstrap1.3.2/Kickstrap/apps/bootstrap/*.ks',
                                 'daemon/static/lib/Kickstrap1.3.2/Kickstrap/apps/bootstrap/affix/*',
