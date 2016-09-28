@@ -20,7 +20,7 @@
             $jq("#div_cron").cron({
                 initial: "*/5 * * * *",
                 onChange: function () {
-                    $jq("#cron-schedule").val($jq(this).cron("value"));
+                    $jq("#txtcron").text($jq(this).cron("value"));
                 },
                 customValues: {
                     "5 Minutes": "*/5 * * * *"
@@ -193,6 +193,8 @@
         <div id="div_cron">
 
         </div>
+        <span>Select Cron:</span>
+        <label id="txtcron"></label>
     </div>
     <div class='row' id='config'>
         <div class='span6'>

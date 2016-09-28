@@ -540,7 +540,9 @@ function updateSchedule(jobName, cronSchedule) {
 }
 
 $('#save-schedule').click(function() {
-  updateSchedule(job.name, $('#cron-schedule').val());
+  var cron = $('#txtcron').text();
+  $('#cron-schedule').val(cron);
+  updateSchedule(job.name, cron);
 });
 
 $('#clear-schedule').click(function() {
