@@ -8,6 +8,8 @@
 .idea
 *.egg-info
 dist
+dagobah.egg-info
+scripts
 build
 eggs
 parts
@@ -27,6 +29,8 @@ pip-log.txt
 .tox
 nosetests.xml
 
+
+
 # Translations
 *.mo
 
@@ -37,6 +41,8 @@ nosetests.xml
 
 # Virtualenv
 venv
+
+run.py
 
 # Vim packages
 *.ropeproject

@@ -20,9 +20,11 @@ login_manager.login_view = "login"
 location = os.path.realpath(os.path.join(os.getcwd(),
                                          os.path.dirname(__file__)))
 
+
 class NullHandler(logging.Handler):
     def emit(self, record):
         pass
+
 
 def replace_nones(dict_or_list):
     """Update a dict or list in place to replace
@@ -40,6 +42,7 @@ def replace_nones(dict_or_list):
             replace_nones(value)
         else:
             dict_or_list[accessor] = replace_none_in_value(value)
+
 
 def get_config_file():
     """ Return the loaded config file if one exists. """
@@ -108,6 +111,7 @@ def configure_requests_logger(config, app):
         stdout_logger.setLevel(logging.DEBUG)
         logger.addHandler(stdout_logger)
 
+
 def configure_app():
     app.debug = get_conf(config, 'Dagobahd.debug', False)
     app.secret_key = get_conf(config, 'Dagobahd.app_secret', 'default_secret')
@@ -140,7 +144,6 @@ def get_conf(config, path, default=None):
 
 
 def init_dagobah(testing=False):
-
     init_core_logger(location, config)
 
     backend = get_backend(config)
@@ -185,11 +188,11 @@ def configure_event_hooks(config):
                                       get_conf(config, 'Email', {}))
 
     if (email_handler and
-        get_conf(config, 'Email.send_on_success', False) == True):
+                get_conf(config, 'Email.send_on_success', False) == True):
         handler.register('job_complete', job_complete_email, email_handler)
 
     if (email_handler and
-        get_conf(config, 'Email.send_on_failure', False) == True):
+                get_conf(config, 'Email.send_on_failure', False) == True):
         handler.register('job_failed', job_failed_email, email_handler)
         handler.register('task_failed', task_failed_email, email_handler)
 
@@ -234,7 +237,6 @@ def init_core_logger(location, config):
     logging.info('Core logger initialized at level %s' % level_string)
 
 
-
 def get_backend(config):
     """ Returns a backend instance based on the Daemon config file. """
 
@@ -252,16 +254,33 @@ def get_backend(config):
             backend_kwargs[conf_kwarg] = get_conf(config,
                                                   'MongoBackend.%s' % conf_kwarg)
         backend_kwargs['port'] = int(backend_kwargs['port'])
-
+        mongo_parmas = get_env_mongo()
+        if mongo_parmas:
+            backend_kwargs['host'] = mongo_parmas[0]
+            backend_kwargs['port'] = int(mongo_parmas[1])
         try:
             from ..backend.mongo import MongoBackend
         except:
             raise ImportError('Could not initialize the MongoDB Backend. Are you sure' +
                               ' the optional drivers are installed? If not, try running ' +
                               '"pip install pymongo" to install them.')
+
         return MongoBackend(**backend_kwargs)
 
     raise ValueError('unknown backend type specified in conf')
+
+
+def get_env_mongo():
+    """
+    since docker the dagobah ,so the i will use the env to replace the host
+    LOCALHOST_PORT=tcp://172.17.0.2:27017
+    """
+    mongo_conn = os.environ.get('MONGO_PORT', '')
+    if not mongo_conn:
+        return None
+
+    mongo_parmas = mongo_conn.replace('tcp://', '').split(':')
+    return mongo_parmas
 
 
 @app.route('/favicon.ico')
