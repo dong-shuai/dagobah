@@ -7,6 +7,7 @@ from collections import defaultdict
 import time
 import threading
 import json
+import traceback
 
 
 class EventHandler(object):
@@ -111,7 +112,10 @@ class Scheduler(threading.Thread):
                     continue
                 if job.next_run >= self.last_check and job.next_run <= now:
                     if job.state.allow_start:
-                        job.start()
+                        try:
+                            job.start()
+                        except Exception as e:
+                            traceback.print_exc()
                     else:
                         job.next_run = job.cron_iter.get_next(datetime)
             self.last_checked = now
