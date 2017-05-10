@@ -405,7 +405,11 @@ class Job(DAG):
             raise DagobahError('job cannot be started in its current state; ' +
                                'it is probably already running')
 
-        self.initialize_snapshot()
+        # the job may not has task , it will raise error to stop the whole application
+        try:
+            self.initialize_snapshot()
+        except Exception as e:
+            raise DagobahError(e.message)
 
         # don't increment if the job was run manually
         if self.cron_iter and datetime.utcnow() > self.next_run:
