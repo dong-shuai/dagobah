@@ -24,6 +24,19 @@ On first start, `dagobahd` will create a [config file](dagobah/daemon/dagobahd.y
 
 Dagobah does not require a backend, but unless you specify one, your jobs and tasks will be lost when the daemon exits. Each backend requires its own set of drivers. Once you've installed the drivers, you then need to specify any backend-specific options in the config. [See the config file for details.](dagobah/daemon/dagobahd.yml)
 
+### Offline Installation
+
+    # download source code using computer with network connection
+    $ git clone git@github.com:dong-shuai/dagobah.git
+    
+    # copy source code to target server, then follow below steps
+    $ cd dabobah
+    $ python setup.py build
+    $ python setup.py install
+    $ dagobahd  # start the web interface on localhost:9000
+
+
+
 ### Available Backends
 
 To use a backend, you need to install the drivers using the commands below and then tell Dagobah to use the backend in the config file (default location `~/.dagobahd.yml`).
@@ -31,7 +44,7 @@ To use a backend, you need to install the drivers using the commands below and t
 #### MongoDB
 
     pip install pymongo
-    
+
 #### Deprecated Backends
 
  * **SQLite**: Deprecated following version 0.3.1.
