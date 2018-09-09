@@ -8,6 +8,7 @@ import subprocess
 import json
 import paramiko
 import logging
+import signal
 
 from croniter import croniter
 from copy import deepcopy
@@ -25,7 +26,6 @@ class DagobahError(Exception):
 
 class Dagobah(object):
     """ Top-level controller for all Dagobah usage.
-
     This is in control of all the jobs for a specific Dagobah
     instance, as well as top-level parameters such as the
     backend used for permanent storage.
@@ -136,7 +136,6 @@ class Dagobah(object):
 
     def commit(self, cascade=False):
         """ Commit this Dagobah instance to the backend.
-
         If cascade is True, all child Jobs are commited as well.
         """
         logger.debug('Committing Dagobah instance with cascade={0}'.format(cascade))
@@ -273,9 +272,7 @@ class Dagobah(object):
 
 class Job(DAG):
     """ Controller for a collection and graph of Task objects.
-
     Emitted events:
-
     job_complete: On successful completion of the job. Returns
     the current serialization of the job with run logs.
     job_failed: On failed completion of the job. Returns
@@ -478,7 +475,6 @@ class Job(DAG):
 
     def edit(self, **kwargs):
         """ Change this Job's name.
-
         This will affect the historical data available for this
         Job, e.g. past run logs will no longer be accessible.
         """
@@ -511,7 +507,6 @@ class Job(DAG):
 
     def edit_task(self, task_name, **kwargs):
         """ Change the name of a Task owned by this Job.
-
         This will affect the historical data available for this
         Task, e.g. past run logs will no longer be accessible.
         """
@@ -717,7 +712,6 @@ class Job(DAG):
 
 class Task(object):
     """ Handles execution and reporting for an individual process.
-
     Emitted events:
     task_failed: On failure of an individual task. Returns the
     current serialization of the task with run logs.
@@ -805,7 +799,11 @@ class Task(object):
             else:
                 self.remote_failure = True
         else:
+            # https://stackoverflow.com/questions/4789837/how-to-terminate-a-python-subprocess-launched-with-shell-true
+            #self.process = subprocess.Popen("exec " + self.command,
             self.process = subprocess.Popen(self.command,
+            # https://stackoverflow.com/questions/2638909/killing-a-subprocess-including-its-children-from-python
+                                            preexec_fn=os.setsid, # setsid will run the program in a new session, thus assigning a new process group to it and its children. calling os.killpg on it thus won't bring down your own python process also
                                             shell=True,
                                             env=os.environ.copy(),
                                             stdout=self.stdout_file,
@@ -937,7 +935,9 @@ class Task(object):
         if not self.process:
             raise DagobahError('task does not have a running process')
         self.kill_sent = True
-        self.process.kill()
+        #self.process.kill()
+        # calling os.killpg to kill with child process
+        os.killpg(os.getpgid(self.process.pid), signal.SIGTERM)
 
 
     def head(self, stream='stdout', num_lines=10):
@@ -1047,7 +1047,6 @@ class Task(object):
 
     def _tail_temp_file(self, temp_file, num_lines, seek_offset=10000):
         """ Returns a list of the last num_lines lines from a temp file.
-
         This works by first moving seek_offset chars back from the end of
         the file, then attempting to tail the file from there. It is
         possible that fewer than num_lines will be returned, even if the
