@@ -1,0 +1,17 @@
+services:
+    dagobah:
+        build: .
+        #image: dongshuai/dagobah
+        links:
+         - mongo:mongodb
+        ports:
+         - 9000:9000
+        depends_on:
+         - mongo
+        container_name: dagobah_container
+
+    mongo:
+        image: mongo:4.0.2
+        volumes:
+        - /my/own/datadir:/data/db
+        container_name: mongodb_4.0.2_container

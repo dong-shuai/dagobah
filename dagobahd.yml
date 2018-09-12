@@ -106,7 +106,7 @@ MongoBackend:
 
   #-----------------------5-----------------------#
   # connection details to a mongo databasem default host is localhost
-  host: 192.168.179.131
+  host: mongodb
   port: 27017
   db: dagobah
 

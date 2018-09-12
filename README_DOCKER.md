@@ -335,3 +335,19 @@ hjd48/redhat        latest              ab1ad8757648        3 years ago         
 Like install mongodb, config mongodb connection info.
 
 Like  ssh key generate/ ssh config...
+
+
+
+
+# Step N: docker-compose
+
+## 1. Install docker-compose
+## 2. Pull mongo
+```shell
+[root@localhost software]#docker pull mongo:4.0.2
+```
+## 3. Run
+```shell
+[root@localhost software]#docker-compose build
+[root@localhost software]#docker-compose up -d 
+```
