@@ -1,0 +1,5 @@
+Host targrt_db_server
+    HostName 192.168.179.131
+    Port 22
+    User ndong
+    IdentityFile /root/.ssh/id_rsa

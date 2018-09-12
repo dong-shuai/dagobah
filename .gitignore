@@ -46,3 +46,7 @@ run.py
 
 # Vim packages
 *.ropeproject
+
+# docker images
+docker-images/
+
