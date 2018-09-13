@@ -1,3 +1,4 @@
+version: '3'
 services:
     dagobah:
         build: .
@@ -6,6 +7,9 @@ services:
          - mongo:mongodb
         ports:
          - 9000:9000
+        volumes:
+        - ./dagobahd.yml:/root/.dagobahd.yml
+        - ./ssh/config:/root/.ssh/config
         depends_on:
          - mongo
         container_name: dagobah_container
